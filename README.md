@@ -7,7 +7,7 @@
 * Only on the client-side using JavaScript
 * Cryptographically strong pseudo-random values generator
 * All printable ASCII characters available
-* Above length 4, there is certainty to draw at least one random character of selected character group in a random position
+* From length 4, there is certainty to draw at least one random character of selected character group in a random position
 * Include and exclude section
 * Default exclusion of ambiguous characters (modifiable)
 * Works as offline Progressive Web App friendly to mobile devices
