@@ -1,8 +1,8 @@
 <h1 align="center">Password Generator</h1>
 <p align="center">
-	<img src="https://raw.githubusercontent.com/michal037/password-generator/master/screenshot.png">
+	<img src="screenshot.png">
+<a href="https://michal037.github.io/password-generator/">Click Here To Try Password Generator</a>
 </p>
-
 ## Features
 * Only on the client-side using JavaScript
 * Cryptographically strong pseudo-random values generator
