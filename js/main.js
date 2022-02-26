@@ -41,7 +41,7 @@ let app = {
 		lowercase: 'abcdefghijklmnopqrstuvwxyz',
 		uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 		digit: '0123456789',
-		symbol: '!\"#$%&\'()*+,-.\/:;<=>?@[\\]^_`{|}~{}%'
+		symbol: '!\"#$%&\'()*+,-.\/:;<=>?@[\\]^_`{|}~'
 	},
 	passwordLength: {
 		min: 1,
