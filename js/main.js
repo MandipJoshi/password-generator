@@ -1,7 +1,7 @@
 /* avoid `console` errors in browsers that lack a console */
-(function() {
+(function () {
 	var method;
-	var noop = function() {};
+	var noop = function () { };
 	var methods = [
 		'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
 		'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
@@ -11,18 +11,18 @@
 	var length = methods.length;
 	var console = (window.console = window.console || {});
 
-	while(length--) {
+	while (length--) {
 		method = methods[length];
 
 		/* only stub undefined methods */
-		if(!console[method]) {
+		if (!console[method]) {
 			console[method] = noop;
 		}
 	}
 }());
 
 /* register service worker */
-if('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator) {
 	window.addEventListener('load', () => {
 		navigator.serviceWorker.register('service-worker.js').then(registration => {
 			/* registration was successful */
@@ -41,16 +41,16 @@ let app = {
 		lowercase: 'abcdefghijklmnopqrstuvwxyz',
 		uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 		digit: '0123456789',
-		symbol: '!\"#$%&\'()*+,-.\/:;<=>?@[\\]^_`{|}~'
+		symbol: '!\"#$%&\'()*+,-.\/:;<=>?@[\\]^_`{|}~{}%'
 	},
 	passwordLength: {
-		min: 0,
-		max: 64
+		min: 1,
+		max: 128
 	},
 	isLowercase(x) {
 		let code = x.charCodeAt(0);
 
-		if((code >= 97) && (code <= 122)) {
+		if ((code >= 97) && (code <= 122)) {
 			return true;
 		}
 
@@ -59,7 +59,7 @@ let app = {
 	isUppercase(x) {
 		let code = x.charCodeAt(0);
 
-		if((code >= 65) && (code <= 90)) {
+		if ((code >= 65) && (code <= 90)) {
 			return true;
 		}
 
@@ -68,15 +68,15 @@ let app = {
 	isDigit(x) {
 		let code = x.charCodeAt(0);
 
-		if((code >= 48) && (code <= 57)) {
+		if ((code >= 48) && (code <= 57)) {
 			return true;
 		}
 
 		return false;
 	},
 	isSymbol(x) {
-		for(const char of app.charSet.symbol) {
-			if(x === char) {
+		for (const char of app.charSet.symbol) {
+			if (x === char) {
 				return true;
 			}
 		}
@@ -86,7 +86,7 @@ let app = {
 	isChar(x) {
 		let code = x.charCodeAt(0);
 
-		if((code >= 33) && (code <= 126)) {
+		if ((code >= 33) && (code <= 126)) {
 			return true;
 		}
 
@@ -98,14 +98,14 @@ let app = {
 		let digit = '';
 		let symbol = '';
 
-		for(const char of data) {
-			if(app.isLowercase(char)) {
+		for (const char of data) {
+			if (app.isLowercase(char)) {
 				lowercase += char;
-			} else if(app.isUppercase(char)) {
+			} else if (app.isUppercase(char)) {
 				uppercase += char;
-			} else if(app.isDigit(char)) {
+			} else if (app.isDigit(char)) {
 				digit += char;
-			} else if(app.isSymbol(char)) {
+			} else if (app.isSymbol(char)) {
 				symbol += char;
 			}
 		}
@@ -119,7 +119,7 @@ let app = {
 	},
 	charMap(charSet, logic) {
 		let tempMap = new Map();
-		for(const char of charSet) {
+		for (const char of charSet) {
 			tempMap.set(char, logic);
 		}
 		return tempMap;
@@ -127,7 +127,7 @@ let app = {
 	charMapToString(charMap) {
 		let result = '';
 		charMap.forEach((value, key) => {
-			if(value) {
+			if (value) {
 				result += key;
 			}
 		});
@@ -137,7 +137,7 @@ let app = {
 		const value = window.crypto.getRandomValues(new Uint32Array(1))[0];
 
 		/* <0;max) - max value is excluded */
-		if(Number.isInteger(max)) {
+		if (Number.isInteger(max)) {
 			return value % Math.abs(max);
 		}
 
@@ -152,9 +152,9 @@ let app = {
 	},
 	printPassword(password) {
 		/* set a different style for each character */
-		for(const char of password) {
+		for (const char of password) {
 			/* style for digit */
-			if(app.isDigit(char)) {
+			if (app.isDigit(char)) {
 				let el = document.createElement('span');
 				el.setAttribute('class', 'digit');
 				el.innerText = char;
@@ -163,7 +163,7 @@ let app = {
 			}
 
 			/* style for symbol */
-			if(app.isSymbol(char)) {
+			if (app.isSymbol(char)) {
 				let el = document.createElement('span');
 				el.setAttribute('class', 'symbol');
 				el.innerText = char;
@@ -172,7 +172,7 @@ let app = {
 			}
 
 			/* default style for the rest of ASCII characters */
-			if(app.isChar(char)) {
+			if (app.isChar(char)) {
 				let el = document.createTextNode(char);
 				app.dom.password.appendChild(el);
 			}
@@ -181,7 +181,7 @@ let app = {
 	generate() {
 		/* check for bad `length` */
 		const length = parseInt(app.dom.length.value, 10);
-		if(length === 0) {
+		if (length === 0) {
 			console.error("Unable to generate a password with a length of 0.");
 			return;
 		}
@@ -189,25 +189,25 @@ let app = {
 		/* check for empty character sets */
 		const cboxLowercase = app.dom.lowercase.checked;
 		const cboxUppercase = app.dom.uppercase.checked;
-		const cboxDigit     = app.dom.digit.checked;
-		const cboxSymbol    = app.dom.symbol.checked;
-		const include       = app.dom.include.value;
-		if(!cboxLowercase && !cboxUppercase && !cboxDigit && !cboxSymbol) {
+		const cboxDigit = app.dom.digit.checked;
+		const cboxSymbol = app.dom.symbol.checked;
+		const include = app.dom.include.value;
+		if (!cboxLowercase && !cboxUppercase && !cboxDigit && !cboxSymbol) {
 			/* `include` cannot be empty */
-			if(include === '') {
+			if (include === '') {
 				console.error('Unable to generate a password, empty character sets.');
 				return;
 			}
 
 			/* `include` must contain at least one ASCII character */
 			let trigger = true;
-			for(const char of include) {
-				if(app.isChar(char)) {
+			for (const char of include) {
+				if (app.isChar(char)) {
 					trigger = false;
 					break;
 				}
 			}
-			if(trigger) {
+			if (trigger) {
 				console.error('Unable to generate a password, include does not contain at least one ASCII character.');
 				return;
 			}
@@ -216,8 +216,8 @@ let app = {
 		/* create characters maps */
 		let mapLowercase = app.charMap(app.charSet.lowercase, cboxLowercase);
 		let mapUppercase = app.charMap(app.charSet.uppercase, cboxUppercase);
-		let mapDigit     = app.charMap(app.charSet.digit,     cboxDigit);
-		let mapSymbol    = app.charMap(app.charSet.symbol,    cboxSymbol);
+		let mapDigit = app.charMap(app.charSet.digit, cboxDigit);
+		let mapSymbol = app.charMap(app.charSet.symbol, cboxSymbol);
 
 		/* sort `include` characters */
 		const includeSorted = app.sortChars(include);
@@ -225,8 +225,8 @@ let app = {
 		/* set true for `include` characters */
 		mapLowercase = new Map([...mapLowercase, ...app.charMap(includeSorted.lowercase, true)]);
 		mapUppercase = new Map([...mapUppercase, ...app.charMap(includeSorted.uppercase, true)]);
-		mapDigit     = new Map([...mapDigit,     ...app.charMap(includeSorted.digit,     true)]);
-		mapSymbol    = new Map([...mapSymbol,    ...app.charMap(includeSorted.symbol,    true)]);
+		mapDigit = new Map([...mapDigit, ...app.charMap(includeSorted.digit, true)]);
+		mapSymbol = new Map([...mapSymbol, ...app.charMap(includeSorted.symbol, true)]);
 
 		/* sort `exclude` characters */
 		const excludeSorted = app.sortChars(app.dom.exclude.value);
@@ -234,25 +234,25 @@ let app = {
 		/* set false for `exclude` characters */
 		mapLowercase = new Map([...mapLowercase, ...app.charMap(excludeSorted.lowercase, false)]);
 		mapUppercase = new Map([...mapUppercase, ...app.charMap(excludeSorted.uppercase, false)]);
-		mapDigit     = new Map([...mapDigit,     ...app.charMap(excludeSorted.digit,     false)]);
-		mapSymbol    = new Map([...mapSymbol,    ...app.charMap(excludeSorted.symbol,    false)]);
+		mapDigit = new Map([...mapDigit, ...app.charMap(excludeSorted.digit, false)]);
+		mapSymbol = new Map([...mapSymbol, ...app.charMap(excludeSorted.symbol, false)]);
 
 		/* convert from charMap to string */
 		const strLowercase = app.charMapToString(mapLowercase);
 		const strUppercase = app.charMapToString(mapUppercase);
-		const strDigit     = app.charMapToString(mapDigit);
-		const strSymbol    = app.charMapToString(mapSymbol);
+		const strDigit = app.charMapToString(mapDigit);
+		const strSymbol = app.charMapToString(mapSymbol);
 
 		/* check for empty character sets */
-		if((strLowercase === '') && (strUppercase === '') && (strDigit === '') && (strSymbol === '')) {
+		if ((strLowercase === '') && (strUppercase === '') && (strDigit === '') && (strSymbol === '')) {
 			console.error('Unable to generate a password, empty character sets.');
 			return;
 		}
 
 		/* simple method for short passwords */
-		if(length <= 3) {
+		if (length <= 3) {
 			let arr = [];
-			for(let i=0; i<length; i++) {
+			for (let i = 0; i < length; i++) {
 				arr[i] = app.getRandomChar(strLowercase + strUppercase + strDigit + strSymbol);
 			}
 			app.clearPassword();
@@ -263,45 +263,45 @@ let app = {
 		/* guarantee at least one character from a non-empty character group */
 		/* create order array */
 		let orderArray = [];
-		for(let i=0; i<length ;i++) {
+		for (let i = 0; i < length; i++) {
 			orderArray[i] = i;
 		}
 
 		/* create exception array */
 		let exceptionArray = [];
-		if(strLowercase !== '') {
+		if (strLowercase !== '') {
 			exceptionArray.push({
 				name: 'L', /* Lowercase */
-				num:  orderArray.splice(app.getRandomValue(orderArray.length), 1)[0]
+				num: orderArray.splice(app.getRandomValue(orderArray.length), 1)[0]
 			});
 		}
-		if(strUppercase !== '') {
+		if (strUppercase !== '') {
 			exceptionArray.push({
 				name: 'U', /* Uppercase */
-				num:  orderArray.splice(app.getRandomValue(orderArray.length), 1)[0]
+				num: orderArray.splice(app.getRandomValue(orderArray.length), 1)[0]
 			});
 		}
-		if(strDigit !== '') {
+		if (strDigit !== '') {
 			exceptionArray.push({
 				name: 'D', /* Digit */
-				num:  orderArray.splice(app.getRandomValue(orderArray.length), 1)[0]
+				num: orderArray.splice(app.getRandomValue(orderArray.length), 1)[0]
 			});
 		}
-		if(strSymbol !== '') {
+		if (strSymbol !== '') {
 			exceptionArray.push({
 				name: 'S', /* Symbol */
-				num:  orderArray.splice(app.getRandomValue(orderArray.length), 1)[0]
+				num: orderArray.splice(app.getRandomValue(orderArray.length), 1)[0]
 			});
 		}
 
 		/* generate new password */
 		let trigger = false;
 		app.clearPassword();
-		for(let i=0; i<length ;i++) {
+		for (let i = 0; i < length; i++) {
 			/* check if `i` is in `exceptionArray`, if so, write the appropriate character */
-			for(let k=0; k<exceptionArray.length ;k++) {
-				if(i === exceptionArray[k].num) {
-					switch(exceptionArray[k].name) {
+			for (let k = 0; k < exceptionArray.length; k++) {
+				if (i === exceptionArray[k].num) {
+					switch (exceptionArray[k].name) {
 						case 'L':
 							/* Lowercase */
 							app.printPassword(app.getRandomChar(strLowercase));
@@ -331,7 +331,7 @@ let app = {
 			}
 
 			/* block universal character generation */
-			if(trigger) {
+			if (trigger) {
 				trigger = false;
 				continue;
 			}
@@ -345,22 +345,22 @@ let app = {
 /* starting point */
 document.addEventListener('DOMContentLoaded', () => {
 	/* get elements from DOM */
-	const $id = s => {return document.getElementById(s);};
-	app.dom.password  = $id('appPassword');
-	app.dom.copy      = $id('appCopy');
-	app.dom.generate  = $id('appGenerate');
-	app.dom.length    = $id('appLength');
-	app.dom.slider    = $id('appSlider');
+	const $id = s => { return document.getElementById(s); };
+	app.dom.password = $id('appPassword');
+	app.dom.copy = $id('appCopy');
+	app.dom.generate = $id('appGenerate');
+	app.dom.length = $id('appLength');
+	app.dom.slider = $id('appSlider');
 	app.dom.lowercase = $id('appLowercase');
 	app.dom.uppercase = $id('appUppercase');
-	app.dom.digit     = $id('appDigit');
-	app.dom.symbol    = $id('appSymbol');
-	app.dom.include   = $id('appInclude');
-	app.dom.exclude   = $id('appExclude');
+	app.dom.digit = $id('appDigit');
+	app.dom.symbol = $id('appSymbol');
+	app.dom.include = $id('appInclude');
+	app.dom.exclude = $id('appExclude');
 
 	/* test for app.dom */
-	for(let element in app.dom) {
-		if(!app.dom[element]) {
+	for (let element in app.dom) {
+		if (!app.dom[element]) {
 			console.error(`Missing interface element: ${element}`);
 			alert(`Missing interface element: ${element}`);
 			return;
@@ -377,17 +377,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		let value = parseInt(app.dom.length.value, 10);
 
 		/* accept only integer value */
-		if(isNaN(value)) {
+		if (isNaN(value)) {
 			app.dom.length.value = app.passwordLength.min;
 			value = app.passwordLength.min;
 		}
 
 		/* check acceptable range */
-		if(value < app.passwordLength.min) {
+		if (value < app.passwordLength.min) {
 			app.dom.length.value = app.passwordLength.min;
 			value = app.passwordLength.min;
 		}
-		if(value > app.passwordLength.max) {
+		if (value > app.passwordLength.max) {
 			app.dom.length.value = app.passwordLength.max;
 			value = app.passwordLength.max;
 		}
@@ -404,17 +404,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		let value = parseInt(app.dom.slider.value, 10);
 
 		/* accept only integer value */
-		if(isNaN(value)) {
+		if (isNaN(value)) {
 			app.dom.slider.value = app.passwordLength.min;
 			value = app.passwordLength.min;
 		}
 
 		/* check acceptable range */
-		if(value < app.passwordLength.min) {
+		if (value < app.passwordLength.min) {
 			app.dom.slider.value = app.passwordLength.min;
 			value = app.passwordLength.min;
 		}
-		if(value > app.passwordLength.max) {
+		if (value > app.passwordLength.max) {
 			app.dom.slider.value = app.passwordLength.max;
 			value = app.passwordLength.max;
 		}
@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	/* callback for copy button */
 	app.dom.copy.addEventListener('click', () => {
-		if(window.getSelection) {
+		if (window.getSelection) {
 			let selection = window.getSelection();
 			let range = document.createRange();
 			range.selectNodeContents(app.dom.password);
