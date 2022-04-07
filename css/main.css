@@ -25,12 +25,12 @@ body {
  * Customize the background color to match your design.
  */
 ::-moz-selection {
-	background: #acbdd2;
+	background: #066a8c;
 	text-shadow: none;
 }
 
 ::selection {
-	background: #acbdd2;
+	background: #066a8c;
 	text-shadow: none;
 }
 
