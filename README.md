@@ -15,5 +15,12 @@
 * Dark theme
 * Separate color for character groups
 
+## Contributors
+Thank you for your contribution to this software:
+
+* Mandip Lal Joshi [@MandipJoshi][MandipJoshi]
+
 ## License
 This software is licensed under the MIT License. See the [license file](LICENSE.txt) for details.
+
+[MandipJoshi]: https://github.com/MandipJoshi
