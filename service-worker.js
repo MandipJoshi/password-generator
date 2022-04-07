@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cache-v8';
+const CACHE_NAME = 'cache-v9';
 const URLS_TO_CACHE = [
     /* css */
     'css/main.css',
