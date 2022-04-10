@@ -1,7 +1,9 @@
 <h1 align="center">Password Generator</h1>
 <p align="center">
-	<img src="screenshot.png"><br>
-	<a href="https://michal037.github.io/password-generator/">Click Here To Try Password Generator</a>
+    <a href="https://michal037.github.io/password-generator/">
+        <img src="screenshot.png"><br>
+        Click Here To Try Password Generator
+    </a>
 </p>
 
 ## Features
